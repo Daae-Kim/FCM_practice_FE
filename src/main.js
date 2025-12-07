@@ -1,4 +1,4 @@
-import { requestNotificationPermission, onMessageListener } from "./fcm.js";
+import { requestNotificationPermission, onMessageListener, sendTokenToServer } from "./fcm.js";
 
 let currentToken = null;
 const notifications = [];
@@ -71,6 +71,19 @@ requestPermissionBtn.addEventListener("click", async () => {
     if (token) {
       displayToken(token);
       showStatus("✅ 알림 권한이 허용되었고 FCM 토큰을 받았습니다!", "success");
+
+      // 백엔드로 토큰 전송
+      const userId = "user123"; // 실제로는 로그인한 사용자 ID 사용
+      const serverUrl = "http://localhost:8080/api/fcm/register";
+
+      showStatus("🔄 서버에 토큰을 등록하는 중...", "info");
+      const sent = await sendTokenToServer(token, userId, serverUrl);
+
+      if (sent) {
+        showStatus("✅ 토큰이 서버에 등록되었습니다!", "success");
+      } else {
+        showStatus("⚠️ 토큰은 받았지만 서버 등록에 실패했습니다.", "error");
+      }
 
       // 포그라운드 메시지 리스너 설정
       onMessageListener((payload) => {
