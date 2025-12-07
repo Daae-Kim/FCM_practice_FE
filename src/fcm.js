@@ -78,16 +78,20 @@ export function onMessageListener(callback) {
 /**
  * FCM 토큰을 서버에 전송
  * @param {string} token FCM 토큰
+ * @param {string} userId 사용자 ID
  * @param {string} serverUrl 서버 API URL
  */
-export async function sendTokenToServer(token, serverUrl) {
+export async function sendTokenToServer(token, userId, serverUrl) {
   try {
     const response = await fetch(serverUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ token })
+      body: JSON.stringify({
+        userId: userId,
+        token: token
+      })
     });
 
     if (response.ok) {
