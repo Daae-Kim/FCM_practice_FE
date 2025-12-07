@@ -3,14 +3,14 @@ importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
 
 // Firebase 설정 (firebase-config.js와 동일한 값 사용)
-// 실제 사용 시 여기에 실제 Firebase 설정을 입력하세요
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBG1feNIjSW4sz4ib8eHZfrXWv4CZS9Xvk",
+  authDomain: "fcmtest-aeb69.firebaseapp.com",
+  projectId: "fcmtest-aeb69",
+  storageBucket: "fcmtest-aeb69.firebasestorage.app",
+  messagingSenderId: "194844519048",
+  appId: "1:194844519048:web:06d7aa343626df54be4d3d",
+  measurementId: "G-MXX7Y596ML"
 };
 
 firebase.initializeApp(firebaseConfig);
