@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Generate PWA Icons</title>
+</head>
+<body>
+  <h1>PWA 아이콘 생성기</h1>
+  <p>아래 링크를 우클릭하여 각 아이콘을 다운로드하세요:</p>
+  <div id="icons"></div>
+
+  <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    const iconsDiv = document.getElementById('icons');
+
+    sizes.forEach(size => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // 배경 그라디언트
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+
+      // 둥근 모서리 배경
+      const radius = size * 0.15;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // 벨 아이콘
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = size * 0.04;
+
+      // 벨 몸체
+      const centerX = size / 2;
+      const centerY = size / 2;
+      const bellSize = size * 0.3;
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - bellSize * 0.15, bellSize, 0.2 * Math.PI, 0.8 * Math.PI);
+      ctx.lineTo(centerX - bellSize * 0.3, centerY + bellSize * 0.3);
+      ctx.quadraticCurveTo(centerX - bellSize * 0.4, centerY + bellSize * 0.5, centerX, centerY + bellSize * 0.5);
+      ctx.quadraticCurveTo(centerX + bellSize * 0.4, centerY + bellSize * 0.5, centerX + bellSize * 0.3, centerY + bellSize * 0.3);
+      ctx.closePath();
+      ctx.fill();
+
+      // 벨 상단
+      ctx.beginPath();
+      ctx.arc(centerX, centerY - bellSize * 0.6, bellSize * 0.15, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // 알림 점
+      ctx.beginPath();
+      ctx.arc(centerX + bellSize * 0.5, centerY - bellSize * 0.5, bellSize * 0.2, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ff4757';
+      ctx.fill();
+
+      // 다운로드 링크 생성
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `icon-${size}x${size}.png`;
+      link.textContent = `Download icon-${size}x${size}.png`;
+      link.style.display = 'block';
+      link.style.margin = '10px 0';
+
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.width = 64;
+      img.height = 64;
+      img.style.marginRight = '10px';
+      img.style.verticalAlign = 'middle';
+
+      const div = document.createElement('div');
+      div.appendChild(img);
+      div.appendChild(link);
+      iconsDiv.appendChild(div);
+    });
+
+    // 자동 다운로드 기능
+    const autoDownloadBtn = document.createElement('button');
+    autoDownloadBtn.textContent = '모든 아이콘 자동 다운로드 (클릭)';
+    autoDownloadBtn.style.padding = '15px 30px';
+    autoDownloadBtn.style.fontSize = '16px';
+    autoDownloadBtn.style.marginTop = '20px';
+    autoDownloadBtn.style.backgroundColor = '#667eea';
+    autoDownloadBtn.style.color = 'white';
+    autoDownloadBtn.style.border = 'none';
+    autoDownloadBtn.style.borderRadius = '8px';
+    autoDownloadBtn.style.cursor = 'pointer';
+
+    autoDownloadBtn.onclick = () => {
+      const links = document.querySelectorAll('a[download]');
+      links.forEach((link, index) => {
+        setTimeout(() => {
+          link.click();
+        }, index * 200);
+      });
+    };
+
+    document.body.insertBefore(autoDownloadBtn, iconsDiv);
+  </script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+  </style>
+</body>
+</html>

@@ -1,4 +1,8 @@
-import { requestNotificationPermission, onMessageListener, sendTokenToServer } from "./fcm.js";
+import {
+  requestNotificationPermission,
+  onMessageListener,
+  sendTokenToServer,
+} from "./fcm.js";
 
 let currentToken = null;
 const notifications = [];
@@ -74,7 +78,7 @@ requestPermissionBtn.addEventListener("click", async () => {
 
       // 백엔드로 토큰 전송
       const userId = "user123"; // 실제로는 로그인한 사용자 ID 사용
-      const serverUrl = "http://localhost:8080/api/fcm/register";
+      const serverUrl = "https://localhost:8080/api/fcm/register";
 
       showStatus("🔄 서버에 토큰을 등록하는 중...", "info");
       const sent = await sendTokenToServer(token, userId, serverUrl);
